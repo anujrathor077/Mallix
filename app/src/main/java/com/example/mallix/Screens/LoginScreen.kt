@@ -54,7 +54,9 @@ fun LoginScreen(
             Icon(
                 imageVector = Icons.Default.ArrowBackIos,
                 contentDescription = null,
-                modifier = Modifier.padding(top = 30.dp, start = 10.dp)
+                modifier = Modifier.padding(top = 30.dp, start = 10.dp).clickable{
+                    navController.popBackStack()
+                }
             )
 
             Spacer(modifier = Modifier.height(15.dp))

@@ -110,71 +110,91 @@ fun Favourite_Module(navController: NavController) {
         "Shoes"
     )
     val productList = listOf(
-        ProductItem(
-            R.drawable.womens_top,
-            "Mango",
-            "T-Shirt SPANISH",
-            "₹799",
-            rating = 3,
-            reviewCount = 10
-        ),
-        ProductItem(
-            R.drawable.croptop_1,
-            "Dorothy Perkins",
-            "Blouse",
-            "₹999",
-            oldPrice = "₹1,299",
-            rating = 4,
-            discount = "-20%"
-        ),
-        ProductItem(
-            R.drawable.women_blouse,
-            "Mango",
-            "Shirt",
-            "₹899",
-            rating = 0,
-            isSoldOut = true
 
-        ),
         ProductItem(
-            R.drawable.women_sweter,
-            "Dorothy Perkins",
-            "Light blouse",
-            "₹1,199",
-            rating = 5
-        ), ProductItem(
-            R.drawable.womens_top,
-            "Mango",
-            "T-Shirt SPANISH",
-            "₹799",
+            id = 1,
+            image = R.drawable.womens_top,
+            brand = "Mango",
+            title = "T-Shirt SPANISH",
+            price = 799.0,
+            size = "M",
             rating = 3
         ),
+
         ProductItem(
-            R.drawable.croptop_1,
-            "Dorothy Perkins",
-            "Blouse",
-            "₹999",
-            oldPrice = "₹1,299",
-            rating = 4,
-            discount = "-20%"
+            id = 2,
+            image = R.drawable.croptop_1,
+            brand = "Dorothy Perkins",
+            title = "Blouse",
+            price = 999.0,
+            size = "L",
+            rating = 4
         ),
+
         ProductItem(
-            R.drawable.women_blouse,
-            "Mango",
-            "Shirt",
-            "₹899",
+            id = 3,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "S",
             rating = 0
         ),
+
         ProductItem(
-            R.drawable.women_sweter,
-            "Dorothy Perkins",
-            "Light blouse",
-            "₹1,199",
+            id = 4,
+            image = R.drawable.women_sweter,
+            brand = "Dorothy Perkins",
+            title = "Light blouse",
+            price = 1199.0,
+            size = "M",
+            rating = 5
+        ),
+
+        ProductItem(
+            id = 5,
+            image = R.drawable.womens_top,
+            brand = "Mango",
+            title = "T-Shirt SPANISH",
+            price = 799.0,
+            size = "XL",
+            rating = 3
+        ),
+
+        ProductItem(
+            id = 6,
+            image = R.drawable.croptop_1,
+            brand = "Dorothy Perkins",
+            title = "Blouse",
+            price = 999.0,
+            size = "M",
+            rating = 4
+        ),
+
+        ProductItem(
+            id = 7,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "L",
+            rating = 0
+        ),
+
+        ProductItem(
+            id = 8,
+            image = R.drawable.women_sweter,
+            brand = "Dorothy Perkins",
+            title = "Light blouse",
+            price = 1199.0,
+            size = "S",
             rating = 5
         )
-
-
     )
+
+
+
+
 
 
     val categories2 = listOf(
@@ -511,7 +531,7 @@ fun Favourite_Module(navController: NavController) {
                                         }
 
                                         Text(
-                                            text = item.price,
+                                            text = "₹${item.price.toInt()}",
                                             fontSize = 14.sp,
                                             fontWeight = Bold,
                                             color = Color.Red

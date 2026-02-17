@@ -16,10 +16,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
-@Preview(showBackground = true)
+
 @Composable
-fun SuccessScreen() {
+fun SuccessScreen(
+    navcontroller: NavHostController
+) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -67,7 +70,6 @@ fun SuccessScreen() {
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
- //TODO: Handle continue shopping
  },
                 shape = RoundedCornerShape(24.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red),

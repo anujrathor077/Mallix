@@ -19,6 +19,11 @@ import com.example.mallix.Screens.LoginScreen
 import com.example.mallix.Screens.RegistrationScreen
 import com.example.mallix.MainScreens.Women_Top
 import com.example.mallix.MainScreens.mainpage1_module.AllViewModel
+import com.example.mallix.MyBag.AddShippingAddressScreen
+import com.example.mallix.MyBag.CheckoutScreen
+import com.example.mallix.MyBag.PaymentCardScreen
+import com.example.mallix.MyBag.Success_Screen2
+import com.example.mallix.Myprofile.SettingsScreen
 import com.example.mallix.ProductCard.Product_Card
 import com.example.mallix.Search.VisualSearchScreen
 import com.example.mallix.Search.visualSearch.Cropitem
@@ -35,6 +40,9 @@ fun MyApp() {
 
     val navController = rememberNavController()
     val viewModel: AllViewModel = viewModel()
+
+
+
 
     NavHost(
         navController = navController,
@@ -83,9 +91,48 @@ fun MyApp() {
             Filter(navController)
         }
 
+        //  My Profile
+
         composable(route="my_order"){
             My_order(navController)
         }
+
+        composable(route="shipping_address"){
+            AddShippingAddressScreen(navController,viewModel)
+        }
+        composable(route="payment_card"){
+            PaymentCardScreen(navController)
+        }
+        composable(route="setting_screen"){
+            SettingsScreen(navController)
+        }
+        composable(route="checkout_screen"){
+            CheckoutScreen(navController,viewModel)
+        }
+        composable(route="success_screen2"){
+            Success_Screen2 (navController)
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         composable(route="profile") {
             Profile_1(navController)
@@ -129,7 +176,10 @@ fun MyApp() {
         //BAg
 
         composable  (route="myBag_screen"){
-            MyBag_Screen(navController)
+            MyBag_Screen(
+                navController,viewModel)
+
+
         }
 
 

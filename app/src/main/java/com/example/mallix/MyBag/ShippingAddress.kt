@@ -1,10 +1,10 @@
 package com.example.mallix.MyBag
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.*
@@ -13,13 +13,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.example.mallix.MainScreens.mainpage1_module.AllViewModel
 
-@Preview(showBackground = true)
+
 @Composable
-fun AddShippingAddressScreen() {
+fun AddShippingAddressScreen(
+    navController: NavHostController,
+    viewModel: AllViewModel
+)
+ {
 
     // 🔹 States
     var fullName by remember { mutableStateOf("") }
@@ -44,7 +49,10 @@ fun AddShippingAddressScreen() {
                 Text(
                     text = "SAVE ADDRESS",
                     color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier=Modifier.clickable{
+                        navController.navigate("checkout_screen")
+                    }
                 )
             }
         }
@@ -63,9 +71,12 @@ fun AddShippingAddressScreen() {
             ) {
                 Icon(
                     Icons.Default.ArrowBackIos,
-                    contentDescription = null
+                    contentDescription = null,
+                    modifier = Modifier.clickable{
+                        navController.popBackStack()
+                    }
                 )
-                Spacer(modifier = Modifier.width(50.dp))
+                Spacer(modifier = Modifier.width(40.dp))
                 Text(
                     text = "Adding Shipping Address",
                     fontSize = 24.sp,
@@ -78,8 +89,8 @@ fun AddShippingAddressScreen() {
 
             // 🔹 Full Name
             OutlinedTextField(
-                value = fullName,
-                onValueChange = { fullName = it },
+                value = viewModel.fullName,
+                onValueChange = {   viewModel.updateFullName(it) },
                 label = { Text("Full name") },
                 placeholder = { Text("Enter full name") },
                 modifier = Modifier
@@ -90,8 +101,8 @@ fun AddShippingAddressScreen() {
 
             // 🔹 Address
             OutlinedTextField(
-                value = address,
-                onValueChange = { address = it },
+                value = viewModel.address,
+                onValueChange ={ viewModel.updateAddress(it) },
                 label = { Text("Address") },
                 placeholder = { Text("Enter address") },
                 modifier = Modifier
@@ -102,8 +113,8 @@ fun AddShippingAddressScreen() {
 
             // 🔹 City
             OutlinedTextField(
-                value = city,
-                onValueChange = { city = it },
+                value = viewModel.city,
+                onValueChange = { viewModel.updateCity(it) },
                 label = { Text("City") },
                 placeholder = { Text("Enter city") },
                 modifier = Modifier
@@ -114,8 +125,8 @@ fun AddShippingAddressScreen() {
 
             // 🔹 State / Province
             OutlinedTextField(
-                value = state,
-                onValueChange = { state = it },
+                value = viewModel.state,
+                onValueChange =  { viewModel.updateState(it) },
                 label = { Text("State/Province/Region") },
                 placeholder = { Text("Enter state") },
                 modifier = Modifier
@@ -126,8 +137,8 @@ fun AddShippingAddressScreen() {
 
             // 🔹 Zip Code
             OutlinedTextField(
-                value = zipCode,
-                onValueChange = { zipCode = it },
+                value = viewModel.zipCode,
+                onValueChange = { viewModel.updateZipCode(it) },
                 label = { Text("Zip Code (Postal Code)") },
                 placeholder = { Text("Enter zip code") },
                 modifier = Modifier

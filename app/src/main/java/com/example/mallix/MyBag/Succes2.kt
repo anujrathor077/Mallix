@@ -1,6 +1,7 @@
 package com.example.mallix.MyBag
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -16,10 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-@Preview(showBackground = true)
+import androidx.navigation.NavController
+
 @Composable
 
-fun Success_Screen2() {
+fun Success_Screen2(
+    navController: NavController
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,7 +75,10 @@ fun Success_Screen2() {
             Text(
                 text = "CONTINUE SHOPPING",
                 color = Color.White,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.clickable{
+                    navController.navigate("main_page1")
+                }
             )
         }
     }

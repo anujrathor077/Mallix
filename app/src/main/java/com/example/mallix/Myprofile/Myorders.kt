@@ -137,7 +137,10 @@ fun My_order(navController: NavController) {
                     .padding(12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Icon(Icons.Default.ArrowBackIos, null)
+                Icon(Icons.Default.ArrowBackIos, null,
+                    modifier=Modifier.clickable{
+                        navController.popBackStack()
+                    })
                 Icon(Icons.Default.Search, null)
             }
 

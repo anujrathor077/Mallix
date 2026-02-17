@@ -76,6 +76,7 @@ import androidx.compose.ui.focus.focusModifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.mallix.CartItem
 import com.example.mallix.MainScreens.mainpage1_module.AllViewModel
 
 //@Preview(showBackground = true
@@ -270,23 +271,28 @@ fun Product_Card(
 
                     product?.let { p ->
 
-                        Row(modifier = Modifier.padding(start = 30.dp)) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
 
                             Text(
                                 text = p.title,
                                 fontWeight = Bold,
-                                fontSize = 26.sp
+                                fontSize = 22.sp
                             )
-
-                            Spacer(modifier = Modifier.width(200.dp))
 
                             Text(
-                                text = "₹ ${p.price}",
+                                text = "₹${p.price}",
                                 fontWeight = Bold,
-                                fontSize = 26.sp
+                                fontSize = 16.sp,
+                                color = Color.Red
                             )
 
-                            Spacer(modifier=Modifier.height(10.dp))
+
+                        Spacer(modifier=Modifier.height(10.dp))
 
 
 
@@ -314,8 +320,29 @@ fun Product_Card(
                     Spacer(modifier = Modifier.height(20.dp))
 
                     //  Add to Cart
+
                     Button(
-                        onClick = { },
+                        onClick = {
+                            product?.let { p ->
+
+                                if (selectedSize.isEmpty()) {
+                                    showSheet = true
+                                    return@Button
+                                }
+
+                                val cartItem = CartItem(
+                                    id = p.id,
+                                    title = p.title,
+                                    image = p.image,
+                                    price = p.price,
+                                    size = selectedSize
+                                )
+
+                                viewModel.addToCart(cartItem)
+
+                                navController.navigate("myBag_screen")
+                            }
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                         modifier = Modifier
                             .fillMaxWidth()

@@ -96,80 +96,92 @@ fun Women_Top(navController: NavController) {
         Icons.Default.Person
     )
 
-    val categories = listOf(
-        "T-shirts",
-        "Crop tops",
-        "Blouses",
-        "Sweaters",
-        "Jackets",
-        "Pants",
-        "Shorts",
-        "Shoes"
-    )
     val productList = listOf(
+
         ProductItem(
-            R.drawable.womens_top,
-            "Mango",
-            "T-Shirt SPANISH",
-            "₹799",
+            id = 1,
+            image = R.drawable.womens_top,
+            brand = "Mango",
+            title = "T-Shirt SPANISH",
+            price = 799.0,
+            size = "M",
             rating = 3,
             reviewCount = 10
         ),
+
         ProductItem(
-            R.drawable.croptop_1,
-            "Dorothy Perkins",
-            "Blouse",
-            "₹999",
-            oldPrice = "₹1,299",
+            id = 2,
+            image = R.drawable.croptop_1,
+            brand = "Dorothy Perkins",
+            title = "Blouse",
+            price = 999.0,
+            size = "L",
+            oldPrice = "1299",
             rating = 4,
             discount = "-20%"
         ),
+
         ProductItem(
-            R.drawable.women_blouse,
-            "Mango",
-            "Shirt",
-            "₹899",
+            id = 3,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "S",
             rating = 0
         ),
+
         ProductItem(
-            R.drawable.women_sweter,
-            "Dorothy Perkins",
-            "Light blouse",
-            "₹1,199",
+            id = 4,
+            image = R.drawable.women_sweter,
+            brand = "Dorothy Perkins",
+            title = "Light blouse",
+            price = 1199.0,
+            size = "M",
             rating = 5
-        ), ProductItem(
-            R.drawable.womens_top,
-            "Mango",
-            "T-Shirt SPANISH",
-            "₹799",
+        ),
+
+        ProductItem(
+            id = 5,
+            image = R.drawable.womens_top,
+            brand = "Mango",
+            title = "T-Shirt SPANISH",
+            price = 799.0,
+            size = "XL",
             rating = 3
         ),
+
         ProductItem(
-            R.drawable.croptop_1,
-            "Dorothy Perkins",
-            "Blouse",
-            "₹999",
-            oldPrice = "₹1,299",
-            rating = 4,
-            discount = "-20%"
+            id = 6,
+            image = R.drawable.croptop_1,
+            brand = "Dorothy Perkins",
+            title = "Blouse",
+            price = 999.0,
+            size = "M",
+            rating = 4
         ),
+
         ProductItem(
-            R.drawable.women_blouse,
-            "Mango",
-            "Shirt",
-            "₹899",
+            id = 7,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "L",
             rating = 0
         ),
+
         ProductItem(
-            R.drawable.women_sweter,
-            "Dorothy Perkins",
-            "Light blouse",
-            "₹1,199",
+            id = 8,
+            image = R.drawable.women_sweter,
+            brand = "Dorothy Perkins",
+            title = "Light blouse",
+            price = 1199.0,
+            size = "S",
             rating = 5
         )
-
-
     )
+
 
 
     val categories2 = listOf(
@@ -289,7 +301,7 @@ fun Women_Top(navController: NavController) {
                         modifier = Modifier.padding(start = 16.dp),
                         horizontalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        items(categories) { item ->
+                        items(productList) { item ->
                             Button(
                                 onClick = { /* click action */ },
                                 shape = RoundedCornerShape(20.dp),
@@ -303,7 +315,7 @@ fun Women_Top(navController: NavController) {
                                 )
                             ) {
                                 Text(
-                                    text = item,
+                                    text ="₹${item.price.toInt()}",
                                     fontSize = 14.sp,
                                     color = Color.White
                                 )
@@ -457,7 +469,7 @@ fun Women_Top(navController: NavController) {
                                         }
 
                                         Text(
-                                            text = item.price,
+                                            text = "₹${item.price.toInt()}",
                                             fontSize = 14.sp,
                                             fontWeight = Bold,
                                             color = Color.Red
@@ -571,6 +583,6 @@ fun RatingBar(
 }
 
 
-// bottomsheet
+
 
 

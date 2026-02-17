@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.collectAsState
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,15 +28,32 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import com.example.mallix.MainScreens.mainpage1_module.AllViewModel
 
 //@Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyBag_Screen(navController: NavHostController) {
+fun MyBag_Screen(  navController: NavHostController,
+                   viewModel: AllViewModel)
+{
     var selectedBottomIndex by remember { mutableStateOf(2) }
     var showPromoSheet by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
+    val cartItems by viewModel.cartList.collectAsState()
+    var isCouponApplied by remember { mutableStateOf(false) }
+
+    var discountPercent by remember { mutableStateOf(0) }
+    val subTotal = cartItems.sumOf { it.price * it.quantity }
+
+    val discountAmount = (subTotal * discountPercent) / 100
+
+    val totalAmount = subTotal - discountAmount
+
+
+
 
 
     val icons = listOf(
@@ -139,340 +157,196 @@ fun MyBag_Screen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            LazyColumn {
 
-            //  ITEM 1
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-                Row(
-                    modifier = Modifier.padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                items(cartItems) { item ->
 
-                    Image(
-                        painter = painterResource(id = com.example.mallix.R.drawable.menshoodies,),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(RoundedCornerShape(12.dp)),
-                        contentScale = ContentScale.Crop
-                    )
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(4.dp)
+                    ) {
 
-                    Spacer(modifier = Modifier.width(12.dp))
+                        Row(
+                            modifier = Modifier.padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
 
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Pullover", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                        Text(
-                            "Color: Black   Size: L",
-                            fontSize = 12.sp,
-                            color = Color.Gray
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            FloatingActionButton(
-                                onClick = {
- //minus click
- },
-                                modifier = Modifier.size(50.dp),
-                                containerColor = Color(0xFFF3F3F3),
-                                shape = CircleShape,
-                                elevation = FloatingActionButtonDefaults
-                                    .elevation(5.dp)
-                            ) {
-                                Text(
-                                    "-",
-                                    fontSize = 32.sp,
-                                    color = Color.Black
-                                )
-                            }
-
-
-                            Text("1", modifier = Modifier.padding(horizontal = 12.dp))
-
-                            FloatingActionButton(
-                                onClick = {
-// minus click
- },
-                                modifier = Modifier.size(50.dp),
-                                containerColor = Color(0xFFF3F3F3),
-                                shape = CircleShape,
-                                elevation = FloatingActionButtonDefaults
-                                    .elevation(5.dp)
-                            ) {
-                                Text(
-                                    "+",
-                                    fontSize = 24.sp,
-                                    color = Color.Black
-                                )
-                            }
-                        }
-                    }
-
-                    Column(horizontalAlignment = Alignment.End) {
-
-
-                        Box {
-
-                            Icon(
-                                Icons.Default.MoreVert,
+                            // Product Image
+                            AsyncImage(
+                                model = item.image,
                                 contentDescription = null,
-                                modifier = Modifier.clickable {
-                                    expanded = true
-                                }
+                                modifier = Modifier
+                                    .size(90.dp)
+                                    .clip(RoundedCornerShape(12.dp)),
+                                contentScale = ContentScale.Crop
                             )
 
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false }
-                            ) {
+                            Spacer(modifier = Modifier.width(12.dp))
 
-                                DropdownMenuItem(
-                                    text = { Text("Add to favorite") },
-                                    onClick = {
-                                        expanded = false
+                            // Title + Size + Qty
+                            Column(modifier = Modifier.weight(1f)) {
 
+                                Text(
+                                    item.title,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 20.sp
+                                )
+
+                                Text(
+                                    "Size: ${item.size}",
+                                    fontSize = 12.sp,
+                                    color = Color.Gray
+                                )
+
+                                Spacer(modifier = Modifier.height(8.dp))
+
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+
+                                    // Minus
+                                    FloatingActionButton(
+                                        onClick = {
+                                            viewModel.decreaseQty(item)
+                                        },
+                                        modifier = Modifier.size(42.dp),
+                                        containerColor = Color(0xFFF3F3F3),
+                                        shape = CircleShape,
+                                        elevation = FloatingActionButtonDefaults.elevation(3.dp)
+                                    ) {
+                                        Text("-", fontSize = 24.sp)
                                     }
-                                )
 
-                                DropdownMenuItem(
-                                    text = { Text("Delete from the list") },
-                                    onClick = {
-                                        expanded = false
+                                    Text(
+                                        item.quantity.toString(),
+                                        modifier = Modifier.padding(horizontal = 12.dp)
+                                    )
 
+                                    // Plus
+                                    FloatingActionButton(
+                                        onClick = {
+                                            viewModel.increaseQty(item)
+                                        },
+                                        modifier = Modifier.size(42.dp),
+                                        containerColor = Color(0xFFF3F3F3),
+                                        shape = CircleShape,
+                                        elevation = FloatingActionButtonDefaults.elevation(3.dp)
+                                    ) {
+                                        Text("+", fontSize = 20.sp)
                                     }
+                                }
+                            }
+
+                            // Right Side Menu + Price
+                            Column(horizontalAlignment = Alignment.End) {
+
+                                var expanded by remember { mutableStateOf(false) }
+
+                                Box {
+
+                                    Icon(
+                                        Icons.Default.MoreVert,
+                                        contentDescription = null,
+                                        modifier = Modifier.clickable {
+                                            expanded = true
+                                        }
+                                    )
+
+                                    DropdownMenu(
+                                        expanded = expanded,
+                                        onDismissRequest = { expanded = false }
+                                    ) {
+
+                                        DropdownMenuItem(
+                                            text = { Text("Delete") },
+                                            onClick = {
+                                                viewModel.removeFromCart(item)
+                                                expanded = false
+                                            }
+                                        )
+                                    }
+                                }
+
+                                Spacer(modifier = Modifier.height(20.dp))
+
+                                Text(
+                                    "₹${item.price * item.quantity}",
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                         }
-
-
-
-
-
-
-
-
-
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Text("51$", fontWeight = FontWeight.Bold)
                     }
+
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
             }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            //  ITEM 2
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
+            if (discountPercent > 0) {
                 Row(
-                    modifier = Modifier.padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Text("Discount ($discountPercent%)")
 
-                    Image(
-                        painter = painterResource(id = com.example.mallix.R.drawable.menshoodies,),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(RoundedCornerShape(12.dp)),
-                        contentScale = ContentScale.Crop
+                    Text(
+                        "-₹$discountAmount",
+                        color = Color.Green,
+                        fontWeight = FontWeight.Bold
                     )
-
-                    Spacer(modifier = Modifier.width(12.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("T-Shirt", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                        Text(
-                            "Color: Black   Size: L",
-                            fontSize = 12.sp,
-                            color = Color.Gray
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            FloatingActionButton(
-                                onClick = {
- //minus click
- },
-                                modifier = Modifier.size(50.dp),
-                                containerColor = Color(0xFFF3F3F3),
-                                shape = CircleShape,
-                                elevation = FloatingActionButtonDefaults
-                                    .elevation(5.dp)
-                            ) {
-                                Text(
-                                    "-",
-                                    fontSize = 32.sp,
-                                    color = Color.Black
-                                )
-                            }
-
-
-                            Text("1", modifier = Modifier.padding(horizontal = 12.dp))
-
-                            FloatingActionButton(
-                                onClick = {
- //minus click
- },
-                                modifier = Modifier.size(50.dp),
-                                containerColor = Color(0xFFF3F3F3),
-                                shape = CircleShape,
-                                elevation = FloatingActionButtonDefaults
-                                    .elevation(5.dp)
-                            ) {
-                                Text(
-                                    "+",
-                                    fontSize = 24.sp,
-                                    color = Color.Black
-                                )
-                            }
-                        }
-                    }
-
-                    Column(horizontalAlignment = Alignment.End) {
-                        Icon(Icons.Default.MoreVert, contentDescription = null)
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Text("51$", fontWeight = FontWeight.Bold)
-                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
-
-
-            // ITEM 3
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-                Row(
-                    modifier = Modifier.padding(12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Image(
-                        painter = painterResource(id = com.example.mallix.R.drawable.menshoodies,),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(RoundedCornerShape(12.dp)),
-                        contentScale = ContentScale.Crop
-                    )
-
-                    Spacer(modifier = Modifier.width(12.dp))
-
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text("Sport Dress", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                        Text(
-                            "Color: Black   Size: L",
-                            fontSize = 12.sp,
-                            color = Color.Gray
-                        )
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            FloatingActionButton(
-                                onClick = {
- //minus click
- },
-                                modifier = Modifier.size(50.dp),
-                                containerColor = Color(0xFFF3F3F3),
-                                shape = CircleShape,
-                                elevation = FloatingActionButtonDefaults
-                                    .elevation(5.dp)
-                            ) {
-                                Text(
-                                    "-",
-                                    fontSize = 32.sp,
-                                    color = Color.Black
-                                )
-                            }
-
-
-                            Text("1", modifier = Modifier.padding(horizontal = 12.dp))
-
-                            FloatingActionButton(
-                                onClick = { //minus click
- },
-                                modifier = Modifier.size(50.dp),
-                                containerColor = Color(0xFFF3F3F3),
-                                shape = CircleShape,
-                                elevation = FloatingActionButtonDefaults
-                                    .elevation(5.dp)
-                            ) {
-                                Text(
-                                    "+",
-                                    fontSize = 24.sp,
-                                    color = Color.Black
-                                )
-                            }
-                        }
-                    }
-
-                    Column(horizontalAlignment = Alignment.End) {
-                        Icon(Icons.Default.MoreVert, contentDescription = null)
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Text("51$", fontWeight = FontWeight.Bold)
-                    }
-                }
-            }
-
-
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Promo code
+            // Total Amount Row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFFF3F3F3), RoundedCornerShape(12.dp))
-                    .padding(14.dp),
+                    .padding(vertical = 12.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Enter your promo code", color = Color.Gray)
-                Icon(
-                    Icons.Default.ArrowForward,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .background(Color.Black, CircleShape)
-                        .padding(6.dp)
-                        .clickable { showPromoSheet = true },
-                    tint = Color.White
+
+                Text(
+                    text = "Total Amount",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Text(
+                    text = "₹$totalAmount",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Red
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+             // Chekout Button
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("Total amount:", color = Color.Gray)
-                Text("124$", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = {},
-                modifier = Modifier
+                onClick = {
+
+                    if (!isCouponApplied) {
+                        // Pehli baar → Coupon sheet open
+                        showPromoSheet = true
+                    } else {
+                        // Dusri baar → Navigate
+                        navController.navigate("shipping_address")
+                    }
+                },
+
+
+
+
+                        modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE53935))
             ) {
-                Text("CHECK OUT", color = Color.White, fontSize = 16.sp)
+                Text(
+                    if (isCouponApplied) "PROCEED TO PAY" else "CHECK OUT",
+                    color = Color.White,
+                    fontSize = 16.sp
+                )
+
             }
         }
 
@@ -590,7 +464,17 @@ fun MyBag_Screen(navController: NavHostController) {
                                 Spacer(modifier = Modifier.height(6.dp))
 
                                 Button(
-                                    onClick = { showPromoSheet= false },
+                                    onClick = {
+
+                                        val percent = promo.first.replace("%", "").toInt()
+
+                                        discountPercent = percent
+                                        isCouponApplied = true   // Mark applied
+                                        showPromoSheet = false
+
+                                       // navController.navigate("payment_card")
+                                    },
+
                                     shape = RoundedCornerShape(20.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = Color(0xFFE53935)

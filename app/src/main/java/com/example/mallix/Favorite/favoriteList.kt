@@ -107,7 +107,7 @@ fun FavoritesScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // 🔹 TITLE + SEARCH
+            //  TITLE + SEARCH
             Box(modifier = Modifier.fillMaxWidth()) {
 
                 Icon(
@@ -238,12 +238,15 @@ fun FavoritesScreen(navController: NavController) {
 
 
                         }
+
+                        // Close Icon
                         Column() {
 
                         Icon(
                             Icons.Default.Close,
                             contentDescription = null,
-                            tint = Color.Gray
+                            tint = Color.Gray,
+                            modifier = Modifier.size(20.dp).clickable {  }
                         )
 
                         Spacer(modifier = Modifier.height(64.dp))

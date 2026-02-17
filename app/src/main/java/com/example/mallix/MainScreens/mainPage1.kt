@@ -192,48 +192,51 @@ fun HomeScreenSingle1(
                     contentPadding = PaddingValues(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+
                     items(products) { product ->
-                        Column(
-                            modifier = Modifier
-                                .width(160.dp)
-                                .clickable {
-                                    viewModel.selectProduct(product)
-                                    navController.navigate("product_card")
-                                }
-                        ) {
 
-                            AsyncImage(
-                                model = product.image,
-                                contentDescription = product.title,
+                            Column(
                                 modifier = Modifier
-                                    .height(200.dp)
-                                    .fillMaxWidth()
-                                    .clip(RoundedCornerShape(12.dp)),
-                                contentScale = ContentScale.Crop
-                            )
+                                    .width(160.dp)
+                                    .clickable {
+                                        viewModel.selectProduct(product)
+                                        navController.navigate("product_card")
+                                    }
+                            ) {
 
-                            Spacer(modifier = Modifier.height(6.dp))
+                                AsyncImage(
+                                    model = product.image,
+                                    contentDescription = product.title,
+                                    modifier = Modifier
+                                        .height(200.dp)
+                                        .fillMaxWidth()
+                                        .clip(RoundedCornerShape(12.dp)),
+                                    contentScale = ContentScale.Crop
+                                )
 
-                            Text(
-                                text = product.title,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold,
-                                maxLines = 2
-                            )
+                                Spacer(modifier = Modifier.height(6.dp))
 
-                            Text(
-                                text = "₹ ${product.price}",
-                                color = Color.Red,
-                                fontWeight = FontWeight.Bold
-                            )
+                                Text(
+                                    text = product.title,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 2
+                                )
+
+                                Text(
+                                    text = "₹ ${product.price}",
+                                    color = Color.Red,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
                     }
-                }
+
             }
 
-            // ======================
-// 🔹 LazyRow 2 (Local)
-// ======================
+
+
+//  LazyRow 2 (Local)
             item {
                 LazyRow(
                     contentPadding = PaddingValues(horizontal = 16.dp),
@@ -242,7 +245,7 @@ fun HomeScreenSingle1(
                     items(newProducts) { product ->
                         Card(
                             shape = RoundedCornerShape(12.dp),
-                            modifier = Modifier.width(160.dp)   // 👈 important (LazyRow me width do)
+                            modifier = Modifier.width(160.dp)
                         ) {
                             Column {
 

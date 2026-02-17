@@ -58,12 +58,12 @@ fun Profile_1(navController: NavController) {
         Icons.Default.Person
     )
     val profileItems = listOf(
-        Pair("My orders", "Already have 12 orders"),
-        Pair("Shipping addresses", "3 addresses"),
-        Pair("Payment methods", "Visa **34"),
-        Pair("Promo codes", "You have special promocodes"),
-        Pair("My reviews", "Reviews for 4 items"),
-        Pair("Settings", "Notifications, password")
+        Triple("My orders", "Already have 12 orders", "my_order"),
+        Triple("Shipping addresses", "3 addresses", "shipping_address"), // Abhi ke liye category par bhej rahe hain
+        Triple("Payment methods", "Visa **34", "payment_card"),
+        Triple("Promo codes", "You have special promocodes", ""),
+        Triple("My reviews", "Reviews for 4 items", ""),
+        Triple("Settings", "Notifications, password", "setting_screen")
     )
 
     Scaffold(
@@ -183,7 +183,10 @@ fun Profile_1(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(72.dp)
-                        .clickable{},
+                        .clickable {
+                            // Ye line 'item.third' se route uthayegi (e.g., "my_order")
+                            navController.navigate(item.third)
+                        },
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Row(

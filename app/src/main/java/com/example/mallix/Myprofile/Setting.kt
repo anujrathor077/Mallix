@@ -1,5 +1,6 @@
 package com.example.mallix.Myprofile
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -28,12 +30,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 
 
-@Preview(showBackground = true)
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(navController: NavHostController) {
 
     var sales by remember { mutableStateOf(true) }
     var newArrivals by remember { mutableStateOf(false) }
@@ -51,8 +53,11 @@ fun SettingsScreen() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back"
+                imageVector = Icons.Default.ArrowBackIos,
+                contentDescription = "Back",
+                modifier = Modifier.clickable{
+                    navController.popBackStack()
+                }
             )
             Spacer(modifier = Modifier.weight(1f))
             Icon(

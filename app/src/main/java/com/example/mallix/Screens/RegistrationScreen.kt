@@ -53,19 +53,20 @@ fun RegistrationScreen(navController: NavHostController) {
             Icon(
                 imageVector = Icons.Default.ArrowBackIos,
                 contentDescription = null,
-                modifier = Modifier.padding(start = 16.dp,top = 18.dp)
+                modifier = Modifier.padding(top = 30.dp, start = 10.dp).clickable{
+                    navController.popBackStack()
+                }
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(15.dp))
 
-            // TITLE
+            //  TITLE
             Text(
-                text = "Sign up",
+                text = "Registration",
                 fontSize = 35.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 16.dp)
+                modifier = Modifier.padding(10.dp)
             )
-
             Spacer(modifier = Modifier.height(40.dp))
 
            // NAME

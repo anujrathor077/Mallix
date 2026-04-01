@@ -3,7 +3,7 @@ package com.example.mallix.MainScreens.mainpage1_module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitInstance {
+object RetrofitClient{
 
     private const val BASE_URL = "https://fakestoreapi.com/"
 

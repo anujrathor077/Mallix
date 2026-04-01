@@ -117,23 +117,6 @@ fun MyApp() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         composable(route="profile") {
             Profile_1(navController)
         }
@@ -168,7 +151,7 @@ fun MyApp() {
         // favorite
 
         composable  (route="favorite"){
-            FavoritesScreen(navController)
+            FavoritesScreen(navController,viewModel)
         }
 
 

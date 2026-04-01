@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mallix.CartItem
 import com.example.mallix.ProductItem
+import com.example.mallix.toProductItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -15,7 +16,7 @@ class AllViewModel : ViewModel() {
 
     private val repository = Repository()
 
-    // ================= PRODUCTS =================
+    // ================= PRODUCTS ================
 
     private val _products = MutableStateFlow<List<ProductItem>>(emptyList())
     val products = _products.asStateFlow()
@@ -58,7 +59,6 @@ class AllViewModel : ViewModel() {
     val totalPrice: Double
         get() = orderPrice + deliveryPrice
 
-
     // ================= INIT =================
 
     init {
@@ -69,7 +69,9 @@ class AllViewModel : ViewModel() {
 
     fun fetchAll() {
         viewModelScope.launch {
-            _products.value = repository.getProducts()
+            _products.value = repository.getProducts().map {
+                it.toProductItem()
+            }
         }
     }
 
@@ -88,13 +90,10 @@ class AllViewModel : ViewModel() {
         }
 
         if (index != -1) {
-
             val oldItem = list[index]
-
             list[index] = oldItem.copy(
                 quantity = oldItem.quantity + 1
             )
-
         } else {
             list.add(item)
         }
@@ -103,9 +102,7 @@ class AllViewModel : ViewModel() {
     }
 
     fun increaseQty(item: CartItem) {
-
         _cartList.value = _cartList.value.map {
-
             if (it.id == item.id && it.size == item.size)
                 it.copy(quantity = it.quantity + 1)
             else it
@@ -113,47 +110,46 @@ class AllViewModel : ViewModel() {
     }
 
     fun decreaseQty(item: CartItem) {
-
         _cartList.value = _cartList.value.mapNotNull {
 
             if (it.id == item.id && it.size == item.size) {
-
                 if (it.quantity > 1)
                     it.copy(quantity = it.quantity - 1)
                 else null
-
             } else it
         }
     }
 
     fun removeFromCart(item: CartItem) {
-
         _cartList.value = _cartList.value.filter {
-
             it.id != item.id || it.size != item.size
         }
     }
 
     // ================= ADDRESS =================
 
-    fun updateFullName(value: String) {
-        fullName = value
-    }
+    fun updateFullName(value: String) { fullName = value }
+    fun updateAddress(value: String) { address = value }
+    fun updateCity(value: String) { city = value }
+    fun updateState(value: String) { state = value }
+    fun updateZipCode(value: String) { zipCode = value }
 
-    fun updateAddress(value: String) {
-        address = value
-    }
+// ================= FAVOURITE =================
 
-    fun updateCity(value: String) {
-        city = value
-    }
+    private val _favoriteProducts = MutableStateFlow<List<ProductItem>>(emptyList())
+    val favoriteProducts = _favoriteProducts.asStateFlow()
 
-    fun updateState(value: String) {
-        state = value
-    }
+    fun toggleFavorite(product: ProductItem) {
+        val currentList = _favoriteProducts.value.toMutableList()
 
-    fun updateZipCode(value: String) {
-        zipCode = value
-    }
+        // Check alredy same id product is exits or not
+        val existingItem = currentList.find { it.id == product.id }
 
+        if (existingItem != null) {
+            currentList.remove(existingItem) //if yes so remove it
+        } else {
+            currentList.add(product) // if no so add it.
+        }
+        _favoriteProducts.value = currentList
+    }
 }

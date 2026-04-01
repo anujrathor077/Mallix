@@ -27,7 +27,7 @@ import com.example.mallix.R
 //@Preview(showBackground = true)
 fun Categories2(navController: NavController) {
 
-    // 🔁 SAME navigation state (as your previous code)
+    //  SAME navigation state
     var selectedBottomIndex by remember { mutableStateOf(1) }
 
     val bottomIcons = listOf(
@@ -54,7 +54,7 @@ fun Categories2(navController: NavController) {
 
     Scaffold(
 
-        // 🔝 TOP BAR
+        //  TOP BAR
         topBar = {
             TopAppBar(
                 title = {
@@ -80,7 +80,7 @@ fun Categories2(navController: NavController) {
             )
         },
 
-        // ⬇️ BOTTOM BAR (SAME AS YOUR CODE)
+        //  BOTTOM BAR
         bottomBar = {
             BottomAppBar {
                 Row(
@@ -131,7 +131,7 @@ fun Categories2(navController: NavController) {
                 .fillMaxSize()
         ) {
 
-            // 🔴 VIEW ALL ITEMS BUTTON
+            //  VIEW ALL ITEMS BUTTON
             Button(
                 onClick = {
                     // 🔗 navigate to product list
@@ -160,7 +160,7 @@ fun Categories2(navController: NavController) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 📃 CATEGORY LIST
+            //  CATEGORY LIST
             LazyColumn {
                 items(categories) { item ->
                     Column(

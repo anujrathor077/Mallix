@@ -34,7 +34,6 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DensityMedium
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardDoubleArrowDown
@@ -72,7 +71,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -111,35 +109,6 @@ fun Favourite_Module(navController: NavController) {
     )
     val productList = listOf(
 
-        ProductItem(
-            id = 1,
-            image = R.drawable.womens_top,
-            brand = "Mango",
-            title = "T-Shirt SPANISH",
-            price = 799.0,
-            size = "M",
-            rating = 3
-        ),
-
-        ProductItem(
-            id = 2,
-            image = R.drawable.croptop_1,
-            brand = "Dorothy Perkins",
-            title = "Blouse",
-            price = 999.0,
-            size = "L",
-            rating = 4
-        ),
-
-        ProductItem(
-            id = 3,
-            image = R.drawable.women_blouse,
-            brand = "Mango",
-            title = "Shirt",
-            price = 899.0,
-            size = "S",
-            rating = 0
-        ),
 
         ProductItem(
             id = 4,
@@ -147,8 +116,7 @@ fun Favourite_Module(navController: NavController) {
             brand = "Dorothy Perkins",
             title = "Light blouse",
             price = 1199.0,
-            size = "M",
-            rating = 5
+            rating = 5,
         ),
 
         ProductItem(
@@ -158,7 +126,7 @@ fun Favourite_Module(navController: NavController) {
             title = "T-Shirt SPANISH",
             price = 799.0,
             size = "XL",
-            rating = 3
+            rating = 3,
         ),
 
         ProductItem(
@@ -167,8 +135,7 @@ fun Favourite_Module(navController: NavController) {
             brand = "Dorothy Perkins",
             title = "Blouse",
             price = 999.0,
-            size = "M",
-            rating = 4
+            rating = 4,
         ),
 
         ProductItem(
@@ -178,7 +145,11 @@ fun Favourite_Module(navController: NavController) {
             title = "Shirt",
             price = 899.0,
             size = "L",
-            rating = 0
+            oldPrice = TODO(),
+            rating = TODO(),
+            reviewCount = TODO(),
+            discount = TODO(),
+            isSoldOut = TODO(),
         ),
 
         ProductItem(
@@ -188,7 +159,7 @@ fun Favourite_Module(navController: NavController) {
             title = "Light blouse",
             price = 1199.0,
             size = "S",
-            rating = 5
+            rating = 5,
         )
     )
 
@@ -424,7 +395,7 @@ fun Favourite_Module(navController: NavController) {
                                     Box {
 
                                         Image(
-                                            painter = painterResource(item.image),
+                                            painter = painterResource(item.image as Int),
                                             contentDescription = null,
                                             modifier = Modifier
                                                 .fillMaxWidth()

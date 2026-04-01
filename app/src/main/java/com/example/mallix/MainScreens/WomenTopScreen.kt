@@ -72,7 +72,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.mallix.Favorite.RatingBar
+//import com.example.mallix.Favorite.RatingBar
 import com.example.mallix.ProductItem
 import com.example.mallix.R
 
@@ -110,15 +110,17 @@ fun Women_Top(navController: NavController) {
         ),
 
         ProductItem(
-            id = 2,
-            image = R.drawable.croptop_1,
-            brand = "Dorothy Perkins",
-            title = "Blouse",
-            price = 999.0,
-            size = "L",
-            oldPrice = "1299",
+            id = 3,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "S",
+            oldPrice = "",
             rating = 4,
-            discount = "-20%"
+            reviewCount = 20,
+            discount = null,
+            isSoldOut = false
         ),
 
         ProductItem(
@@ -128,47 +130,67 @@ fun Women_Top(navController: NavController) {
             title = "Shirt",
             price = 899.0,
             size = "S",
-            rating = 0
+            oldPrice = "",
+            rating = 4,
+            reviewCount = 20,
+            discount = null,
+            isSoldOut = false
         ),
 
         ProductItem(
-            id = 4,
-            image = R.drawable.women_sweter,
-            brand = "Dorothy Perkins",
-            title = "Light blouse",
-            price = 1199.0,
-            size = "M",
-            rating = 5
-        ),
-
-        ProductItem(
-            id = 5,
-            image = R.drawable.womens_top,
-            brand = "Mango",
-            title = "T-Shirt SPANISH",
-            price = 799.0,
-            size = "XL",
-            rating = 3
-        ),
-
-        ProductItem(
-            id = 6,
-            image = R.drawable.croptop_1,
-            brand = "Dorothy Perkins",
-            title = "Blouse",
-            price = 999.0,
-            size = "M",
-            rating = 4
-        ),
-
-        ProductItem(
-            id = 7,
+            id = 3,
             image = R.drawable.women_blouse,
             brand = "Mango",
             title = "Shirt",
             price = 899.0,
-            size = "L",
-            rating = 0
+            size = "S",
+            oldPrice = "",
+            rating = 4,
+            reviewCount = 20,
+            discount = null,
+            isSoldOut = false
+        ),
+
+        ProductItem(
+            id = 3,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "S",
+            oldPrice = "",
+            rating = 4,
+            reviewCount = 20,
+            discount = null,
+            isSoldOut = false
+        ),
+
+        ProductItem(
+            id = 3,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "S",
+            oldPrice = "",
+            rating = 4,
+            reviewCount = 20,
+            discount = null,
+            isSoldOut = false
+        ),
+
+        ProductItem(
+            id = 3,
+            image = R.drawable.women_blouse,
+            brand = "Mango",
+            title = "Shirt",
+            price = 899.0,
+            size = "S",
+            oldPrice = "",
+            rating = 4,
+            reviewCount = 20,
+            discount = null,
+            isSoldOut = false
         ),
 
         ProductItem(
@@ -178,7 +200,7 @@ fun Women_Top(navController: NavController) {
             title = "Light blouse",
             price = 1199.0,
             size = "S",
-            rating = 5
+            rating = 5,
         )
     )
 
@@ -396,7 +418,7 @@ fun Women_Top(navController: NavController) {
                                     Box {
 
                                         Image(
-                                            painter = painterResource(item.image),
+                                            painter = painterResource(item.image as Int),
                                             contentDescription = item.title,
                                             modifier = Modifier
                                                 .fillMaxWidth()
@@ -432,11 +454,11 @@ fun Women_Top(navController: NavController) {
 
                                     // RATING
 
-                                    RatingBar(
+                                   /* RatingBar(
                                         rating = item.rating,
                                         reviewCount = item.reviewCount
                                     )
-
+*/
                                     //  Spacer(modifier = Modifier.height(8.dp))
 
                                     // BRAND

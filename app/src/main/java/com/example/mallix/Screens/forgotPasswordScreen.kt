@@ -3,6 +3,7 @@ package com.example.mallix.Screens
 
 
 import android.R
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -61,11 +62,14 @@ fun Forgot1(navController: NavController){
                 Icon(
                     Icons.Default.ArrowBackIos,
                     contentDescription = null,
-                    modifier = Modifier.padding(top = 30.dp, start = 10.dp)
+                    modifier = Modifier.padding(top = 30.dp, start = 10.dp).clickable{
+                        navController.popBackStack()
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
-// text
+
+                // text
 
                 Text(
                     text = "Forgot password",
@@ -87,6 +91,8 @@ fun Forgot1(navController: NavController){
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
+
+                // email
 
                 OutlinedTextField(
                     value = email,

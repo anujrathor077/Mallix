@@ -2,14 +2,11 @@ package com.example.mallix.MainScreens.mainpage1_module
 
 
 
-data class Product(
+data class ProductApi(
     val id: Int,
     val title: String,
     val price: Double,
-    val description: String,
-    val category: String,
-    val image: String,
-    val rating: Rating
+    val image: String
 )
 
 

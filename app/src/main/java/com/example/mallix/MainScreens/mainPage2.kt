@@ -233,14 +233,30 @@ fun HomeScreenSingle2(navController: NavController) {
 
 @Composable
 fun RatingBar(
-    rating: Float,
+    rating: Any,
     maxRating: Int = 5,
     starSize: Dp = 20.dp
 ) {
+    // 🔐 safe convert to Float
+    val ratingValue = when (rating) {
+        is Int -> rating.toFloat()
+        is Float -> rating
+        is Double -> rating.toFloat()
+        is String -> rating.toFloatOrNull() ?: 0f
+        else -> 0f
+    }
+
     Row {
         for (i in 1..maxRating) {
+
+            val icon = when {
+                i <= ratingValue -> Icons.Default.Star
+                i - ratingValue <= 0.5f -> Icons.Default.StarHalf
+                else -> Icons.Default.StarBorder
+            }
+
             Icon(
-                imageVector = if (i <= rating) Icons.Default.Star else Icons.Default.StarBorder,
+                imageVector = icon,
                 contentDescription = null,
                 tint = Color(0xFFFFC107),
                 modifier = Modifier.size(starSize)
@@ -248,7 +264,6 @@ fun RatingBar(
         }
     }
 }
-
 // DATA CLASS
 
 data class NewProduct(

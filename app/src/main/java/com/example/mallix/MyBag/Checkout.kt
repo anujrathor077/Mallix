@@ -259,7 +259,7 @@ fun CheckoutScreen(
                     )
 
                     Text(
-                        "₹%.2f".format(viewModel.totalPrice),
+                        "%.2f$".format(viewModel.totalPrice),
                         fontWeight = FontWeight.Bold
                     )
                 }

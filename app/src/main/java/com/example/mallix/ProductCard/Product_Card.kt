@@ -62,6 +62,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingBag
@@ -190,7 +191,12 @@ fun Product_Card(
         val product by viewModel.selectedProduct.collectAsState()
 
 
-        LazyColumn(modifier = Modifier.padding(paddingValues))
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentPadding = PaddingValues(bottom = 80.dp) // bottom bar ke liye space
+        )
         {
 
             item {
@@ -255,10 +261,10 @@ fun Product_Card(
                         modifier = Modifier.padding(top = 3.dp).size(40.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Favorite,
-                            contentDescription = "Back",
-
-                            )
+                            imageVector = Icons.Default.FavoriteBorder,
+                            contentDescription = "Favorite",
+                            tint = Color.Red
+                        )
 
                     }
                 }
@@ -267,35 +273,33 @@ fun Product_Card(
 
                 // Brand Name
 
-                Column() {
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
+                ) {
 
                     product?.let { p ->
 
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 20.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
 
                             Text(
                                 text = p.title,
                                 fontWeight = Bold,
-                                fontSize = 22.sp
+                                fontSize = 18.sp,
+                                maxLines = 4,
+                                modifier = Modifier.weight(1f)
                             )
+
+                            Spacer(modifier = Modifier.width(16.dp))
 
                             Text(
                                 text = "₹${p.price}",
                                 fontWeight = Bold,
-                                fontSize = 16.sp,
+                                fontSize = 20.sp,
                                 color = Color.Red
                             )
-
-
-                        Spacer(modifier=Modifier.height(10.dp))
-
-
-
                         }
                     }
 
@@ -337,7 +341,6 @@ fun Product_Card(
                                     price = p.price,
                                     size = selectedSize
                                 )
-
                                 viewModel.addToCart(cartItem)
 
                                 navController.navigate("myBag_screen")

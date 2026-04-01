@@ -40,6 +40,10 @@ fun SettingsScreen(navController: NavHostController) {
     var sales by remember { mutableStateOf(true) }
     var newArrivals by remember { mutableStateOf(false) }
     var deliveryStatus by remember { mutableStateOf(false) }
+    var fullname by remember { mutableStateOf("") }
+    var DOB by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
 
     Column(
         modifier = Modifier
@@ -86,8 +90,8 @@ fun SettingsScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = fullname,
+            onValueChange = {fullname=it},
             placeholder = { Text("Full name") },
             modifier = Modifier.fillMaxWidth(),
             //shape = RoundedCornerShape(12.dp)
@@ -96,8 +100,8 @@ fun SettingsScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
-            value = "12/12/1989",
-            onValueChange = {},
+            value = DOB,
+            onValueChange = {DOB=it},
             modifier = Modifier.fillMaxWidth(),
             //shape = RoundedCornerShape(12.dp),
             enabled = false
@@ -125,7 +129,7 @@ fun SettingsScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
-            value = "************",
+            value = password,
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
            // shape = RoundedCornerShape(12.dp),
